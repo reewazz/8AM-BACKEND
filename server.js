@@ -4,7 +4,9 @@ import mongoose from "mongoose";
 import Blog from "./model/Blog.js";
 import dotenv from 'dotenv'
 import { connectDB } from "./config/db.js";
-import { getAllBlogs } from "./controllers/blogControllers.js";
+import { createBlog, getAllBlogs } from "./controllers/blogControllers.js";
+import { CreateCategory } from "./controllers/categoryControllers.js";
+import blogRoutes from "./routes/blogRoutes.js"
 
 const app = express();
 app.use(cors());
@@ -55,44 +57,10 @@ app.get("/products/:id", (req, res) => {
 // });
 
 
-app.post("/blog", async(req, res) => {
-  const response = await Blog.create({
-    title: req.body.title,
-    author: req.body.author,
-    description: req.body.description,
-    likes: 1000,
-    image: req.body.image,
-  });
-
-  res.send("Blog created successfully")
-});
-app.get ("/getAllBlogs", getAllBlogs)
-
-app.get("/blog/:id", async(req,res)=> {
-  console.log("getting blog")
-  const blogs = await Blog.findById(req.params.id)
-  res.json(blogs)
-
-})
-
-app.put ('/blog/:id',async(req,res)=> {
-  console.log("updating blog")
-  const updatedblog = await Blog.findByIdAndUpdate(req.params.id,req.body,{new:true})
-  res.json(updatedblog)
-
-})
+app.use("/blog",blogRoutes)
 
 
-app.delete("/blog/delete/:id", async(req,res)=> {
-  const blogs = await Blog.findByIdAndDelete(req.params.id)
-  res.send("Deleted Successfully")
 
-})
-app.get("/title/:title", async(req,res)=> {
-  
-  const blogs = await Blog.find({title : req.params.title})
-  res.json(blogs)
-})
 
 app.post("/firstpost", (req, res) => {
   const myresponse = req.body;
