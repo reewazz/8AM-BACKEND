@@ -7,6 +7,7 @@ import { connectDB } from "./config/db.js";
 import { createBlog, getAllBlogs } from "./controllers/blogControllers.js";
 import { CreateCategory } from "./controllers/categoryControllers.js";
 import blogRoutes from "./routes/blogRoutes.js"
+import authRoutes from  "./routes/authRoutes.js"
 
 const app = express();
 app.use(cors());
@@ -58,6 +59,7 @@ app.get("/products/:id", (req, res) => {
 
 
 app.use("/blog",blogRoutes)
+app.use("/auth",authRoutes)
 
 
 
