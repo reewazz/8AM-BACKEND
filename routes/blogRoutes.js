@@ -1,10 +1,11 @@
 import { createBlog, getAllBlogs, getBlogsByCategory } from "../controllers/blogControllers.js"
 import express from "express"
+import { verifyToken } from "../middlewares/authMiddleware.js";
 
 
 const router = express.Router()
 
-router.get ("/getAllBlogs", getAllBlogs)
+router.get ("/getAllBlogs", verifyToken, getAllBlogs)
 
   
   router.post("/", createBlog);
@@ -12,7 +13,6 @@ router.get ("/getAllBlogs", getAllBlogs)
   router.get('/byCategory/:id',getBlogsByCategory)
   
   router.get("/:id", async(req,res)=> {
-    console.log("getting blog")
     const blogs = await Blog.findById(req.params.id)
     res.json(blogs)
   
