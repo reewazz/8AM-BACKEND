@@ -2,7 +2,7 @@ import User from "../model/User.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-const jwtSecret = "mern"
+
 export const createUser = async(req, res) => {
 
 try{
@@ -57,7 +57,7 @@ try{
     const token = jwt.sign({
       id: userData.id,
       email: userData.email
-    }, jwtSecret)
+    }, process.env.JWT_SECRET)
 
     const formattedResponse = {
       message : "Logged In Successfully",
